@@ -16,53 +16,62 @@ const objSherik = {
     goal:''
 }
 
+const arr = ['category', 'allName', 'technology', 'call', 'region', 'salary', 'jobs', 'callTime', 'goal']
+var chatId ;
+
 bot.on('message', (msg) => {
 
     // started bot
      if(msg.text === '/start'){
         const opts = {
-            reply_to_message_id: msg.message_id,
-            reply_markup: JSON.stringify({
+            reply_markup:{
                 keyboard: [
                     ['Sherik kerak', 'Ish joyi kerak'],
                     ['Hodim kerak', 'Ustoz kerak'] ,
                     ['Shogirt kerak']           
                 ],
-                one_time_keyboard: true,
-                selective: true
-            })
+            }
         }
-
+        const message =  `Assalomu alekum ${msg.from.first_name} \nUstoz shogirt kanalining rasmiy botiga hush kelibsiz\n\n/help yordam buyrugi orqali nimalarga qodir ekanligimni bilib oling!`
         bot.sendMessage(
             msg.chat.id, 
-            `Assalomu alekum ${msg.from.first_name} Ustoz shogirt kanalining rasmiy botiga hush kelibsiz`,
-             opts
-            )
-     }
+            message,
+            opts,
+         )
+        }
+  
 
      //category Sherik kerak
      if(msg.text === 'Sherik kerak'){
         objSherik.category = msg.text
+        chatId = msg.message_id
         bot.sendMessage(
             msg.chat.id, 
-            `Sherik topish uchun ariza berish Hozir sizga birnecha savollar beriladi.Har biriga javob bering. Oxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing va arizangiz Adminga yuboriladi.`
+            `<strong>Sherik topish uchun ariza berish</strong> \n\nHozir sizga birnecha savollar beriladi.\nHar biriga javob bering.\nOxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing \nva arizangiz Adminga yuboriladi.`,
+            {parse_mode:'HTML'}
             )
-        bot.sendMessage(msg.chat.id, 'Isim, familiyangizni kiriting')
-        return
+        bot.sendMessage(msg.chat.id, '<b>Isim, familiyangizni kiriting</b>', {parse_mode:'HTML'})
+     }
+     
+     if(msg.message_id - chatId == 3 ){
+        objSherik.allName = msg.text
+        chatId = msg.message_id
+        console.log(chatId);
+        bot.sendMessage(msg.chat.id, `
+        📚 <b>Texnologiya:</b> \n\nTalab qilinadigan texnologiyalarni kiriting \nTexnologiya nomlarini vergul bilan ajrating. Masalan,\n\nJava, C++, C#`,
+        {parse_mode:'HTML'}
+        )
      }
 
-     
-     if(objSherik.category === 'Sherik kerak'){
+    if(msg.message_id-chatId == 2){
         objSherik.allName = msg.text
-        bot.sendMessage(msg.chat.id, `
-        📚 Texnologiya:Talab qilinadigan texnologiyalarni kiriting? Texnologiya nomlarini vergul bilan ajrating. Masalan, 
-         Java, C++, C#`)
-         return
-     }
-    if(objSherik.allName){
-        objSherik.allName = msg.text
-        bot.sendMessage(msg.chat.id, ` 📞 Aloqa: Bog'lanish uchun raqamingizni kiriting ? Masalan, +998 90 123 45 67 `)
-    }     
+        chatId = msg.message_id
+        bot.sendMessage(msg.chat.id, 
+            ` 📞 <b>Aloqa:</b> \n\nBog'lanish uchun raqamingizni kiriting \nMasalan, +998 90 123 45 67 `,
+            {parse_mode:'HTML'}
+            )
+    }
+
 
 });
 
