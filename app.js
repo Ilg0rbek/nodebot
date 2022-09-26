@@ -20,7 +20,7 @@ bot.on('message', (msg) => {
                 keyboard: [
                     ['Sherik kerak', 'Ish joyi kerak'],
                     ['Hodim kerak', 'Ustoz kerak'] ,
-                    ['Shogirt kerak']           
+                    ['Shogird kerak']           
                 ],
             }
         }
@@ -50,6 +50,66 @@ bot.on('message', (msg) => {
         }
         return
      }
+
+      //category Ish joy kerak
+      if(msg.text === 'Ish joy kerak'){
+        objSherik.category = msg.text 
+        bot.sendMessage(
+            msg.chat.id, 
+            `<strong>Ish joy topish uchun ariza berish</strong> \n\nHozir sizga birnecha savollar beriladi.\nHar biriga javob bering.\nOxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing \nva arizangiz Adminga yuboriladi.`,
+            {parse_mode:'HTML'}
+            )
+        bot.sendMessage(msg.chat.id, '<b>Isim, familiyangizni kiriting</b>', {parse_mode:'HTML'})
+        if(step === 1){
+            step++
+        }
+        return
+     }
+
+      //category Hodim kerak
+      if(msg.text === 'Hodim kerak'){
+        objSherik.category = msg.text 
+        bot.sendMessage(
+            msg.chat.id, 
+            `<strong>Hodim topish uchun ariza berish</strong> \n\nHozir sizga birnecha savollar beriladi.\nHar biriga javob bering.\nOxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing \nva arizangiz Adminga yuboriladi.`,
+            {parse_mode:'HTML'}
+            )
+        bot.sendMessage(msg.chat.id, '<b>Isim, familiyangizni kiriting</b>', {parse_mode:'HTML'})
+        if(step === 1){
+            step++
+        }
+        return
+     }
+
+        //category Ustoz kerak
+        if(msg.text === 'Ustoz kerak'){
+            objSherik.category = msg.text 
+            bot.sendMessage(
+                msg.chat.id, 
+                `<strong>Ustoz topish uchun ariza berish</strong> \n\nHozir sizga birnecha savollar beriladi.\nHar biriga javob bering.\nOxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing \nva arizangiz Adminga yuboriladi.`,
+                {parse_mode:'HTML'}
+                )
+            bot.sendMessage(msg.chat.id, '<b>Isim, familiyangizni kiriting</b>', {parse_mode:'HTML'})
+            if(step === 1){
+                step++
+            }
+            return
+         }
+
+        //category Shogird kerak
+        if(msg.text === 'Shogird kerak'){
+            objSherik.category = msg.text 
+            bot.sendMessage(
+                msg.chat.id, 
+                `<strong>Shogird topish uchun ariza berish</strong> \n\nHozir sizga birnecha savollar beriladi.\nHar biriga javob bering.\nOxirida agar hammasi to'g'ri bo'lsa, HA tugmasini bosing \nva arizangiz Adminga yuboriladi.`,
+                {parse_mode:'HTML'}
+                )
+            bot.sendMessage(msg.chat.id, '<b>Isim, familiyangizni kiriting</b>', {parse_mode:'HTML'})
+            if(step === 1){
+                step++
+            }
+            return
+         }
 
      if(step===2 ){
         objSherik.allName = msg.text
@@ -84,7 +144,7 @@ bot.on('message', (msg) => {
             return
      }
 
-     if(step === 5){
+     if(step===5){
         objSherik.region = msg.text
         bot.sendMessage(
             msg.chat.id, 
@@ -127,8 +187,8 @@ bot.on('message', (msg) => {
             return
     }
     
-    if(step===9){
-        objSherik.goal === msg.text
+    if(step===9 && msg.text !==''){
+        objSherik.goal = msg.text
         const message = `
            \n\n<b>${objSherik.category}:</b>
            \n\n🏅 Sherik: ${objSherik.allName},\n📚 Texnologiya: ${objSherik.technology},\n🇺🇿 Telegram: ${msg.from.username},\n📞 Aloqa: ${objSherik.call},\n🌐 Hudud: ${objSherik.region},\n💰 Narxi: ${objSherik.salary},\n👨🏻‍💻 Kasbi: ${objSherik.jobs},\n🕰 Murojaat qilish vaqti: ${objSherik.callTime},\n🔎 Maqsad: ${objSherik.goal}\n\n${objSherik.technology},${objSherik.region}\n\n
@@ -148,6 +208,12 @@ bot.on('message', (msg) => {
             {parse_mode:'HTML'}
         )
         bot.sendMessage(msg.chat.id, `Barcha ma'lumotlar to'g'rimi?`, opts)
+    }
+    if(msg.text === 'Ha'){
+        bot.sendMessage(msg.chat.id, `<b>Arizanigiz qabul qilindi yaqin 24 - 48 soat \nichida kanalda elo'n qilinadi !!! \Menu boshiga qaytish uchun /start</b>`, {parse_mode:'HTML'})
+    }
+    if(msg.text === 'Yo`q'){
+        bot.sendMessage(msg.chat.id, `<b>Arizanigiz qabul qilinmadi !!!! \nQayta elon berish uchun</b>`, {parse_mode:'HTML'})
     }
 
 });
